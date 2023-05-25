@@ -1,5 +1,6 @@
 package commons.spring.security
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,6 +25,9 @@ public class SecurityWebServletConfiguration(
     private val restAuthenticationEntryPoint: RestAuthenticationEntryPoint
 ){
 
+    @Autowired
+    private lateinit var authenticationConfiguration: AuthenticationConfiguration
+
     @Bean
     public fun ignoringCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer { web: WebSecurity ->
@@ -46,7 +50,6 @@ public class SecurityWebServletConfiguration(
     @Bean
     @Throws(Exception::class)
     public fun filterChain(http: HttpSecurity): SecurityFilterChain? {
-        val authenticationConfiguration = http.getSharedObject(AuthenticationConfiguration::class.java)
 
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
