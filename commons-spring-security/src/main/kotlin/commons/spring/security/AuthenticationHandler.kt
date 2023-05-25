@@ -2,12 +2,9 @@ package commons.spring.security
 
 import commons.spring.encrypt.parseJwtClaims
 
-public class AuthenticationHandler(
-    private val serviceSecret: String,
-    private val accessTokenSecret: String
-) {
+public class AuthenticationHandler {
 
-    public fun handleAccessToken(accessToken: String): Authentication {
+    public fun handleAccessToken(accessTokenSecret: String,accessToken: String): Authentication {
         val claims = parseJwtClaims(accessToken, accessTokenSecret)
 
         return Authentication(
@@ -17,7 +14,7 @@ public class AuthenticationHandler(
         )
     }
 
-    public fun handleServiceToken(serviceToken: String): Authentication {
+    public fun handleServiceToken(serviceSecret: String, serviceToken: String): Authentication {
 
         if (serviceToken == serviceSecret) {
             Authentication(
