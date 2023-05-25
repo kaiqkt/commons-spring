@@ -1,4 +1,4 @@
-package com.kaiqkt.commons.spring.encrypt
+package commons.spring.encrypt
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm

@@ -1,4 +1,4 @@
-package com.kaiqkt.commons.spring.encrypt
+package commons.spring.encrypt
 
 import java.math.BigInteger
 import java.security.SecureRandom
