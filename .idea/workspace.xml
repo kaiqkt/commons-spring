@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43dfe2d9-4715-454e-89af-dc2ef71d5df1" name="Changes" comment="" />
+    <list default="true" id="43dfe2d9-4715-454e-89af-dc2ef71d5df1" name="Changes" comment="include .idea in the gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,13 +70,13 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "gitignore",
     "jdk.selected.JAVA_MODULE": "11",
     "last_opened_file_path": "C:/Projetos/commons-spring",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Kotlin"
+    "settings.editor.selected.configurable": "vcs.Subversion.SSH"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -145,6 +147,9 @@
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\kaiqu\AppData\Roaming\Subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="43dfe2d9-4715-454e-89af-dc2ef71d5df1" name="Changes" comment="" />
@@ -153,7 +158,30 @@
       <option name="presentableId" value="Default" />
       <updated>1684949502664</updated>
     </task>
+    <task id="LOCAL-00001" summary="include .idea in the gitignore">
+      <created>1684988767197</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684988767197</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="include .idea in the gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="include .idea in the gitignore" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
