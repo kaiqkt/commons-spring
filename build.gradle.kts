@@ -18,7 +18,7 @@ allprojects {
         mavenCentral()
     }
 
-    dependencies{
+    dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web:2.7.2")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
     }
@@ -40,8 +40,8 @@ allprojects {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/kaiqkt/commons-spring")
                 credentials {
-                    username = project.findProperty("gpr.user") as String?
-                    password = project.findProperty("gpr.key") as String?
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("GPR_USER")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("GPR_API_KEY")
                 }
             }
         }
