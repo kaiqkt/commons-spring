@@ -1,6 +1,6 @@
 package commons.spring.security
 
-import com.kaiqkt.commons.spring.encrypt.parseJwtClaims
+import commons.spring.encrypt.parseJwtClaims
 
 public class AuthenticationHandler(
     private val serviceSecret: String,
