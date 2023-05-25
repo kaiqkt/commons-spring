@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
@@ -37,15 +38,22 @@ public class SecurityWebServletConfiguration(
     }
 
     @Bean
+    @Throws(java.lang.Exception::class)
+    public fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
+    }
+
+    @Bean
     @Throws(Exception::class)
     public fun filterChain(http: HttpSecurity): SecurityFilterChain? {
-        val authenticationManager = http.getSharedObject(AuthenticationManager::class.java)
+        val authenticationConfiguration = http.getSharedObject(AuthenticationConfiguration::class.java)
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
             .headers().apply { disable() }.and()
             .authorizeHttpRequests().and()
-            .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager, restAuthenticationEntryPoint))
+            .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager(authenticationConfiguration), restAuthenticationEntryPoint))
 
         return http.build()
     }

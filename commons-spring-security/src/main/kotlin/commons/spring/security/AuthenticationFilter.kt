@@ -17,19 +17,29 @@ public class AuthenticationFilter(
     private val restAuthenticationEntryPoint: RestAuthenticationEntryPoint
 ) : BasicAuthenticationFilter(authenticationManager) {
 
+
+    private val handler = AuthenticationHandler()
+
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        val accessToken = request.getHeader(AUTHORIZATION)?.let {
+        request.getHeader(AUTHORIZATION)?.let {
             try {
-                val result = when{
+                val result: Authentication = when{
                     it.startsWith(BEARER_PREFIX) -> {
                         val customerAuthSecret = authenticationProperties.customerAuthSigningSecret ?: throw CustomAuthenticationException("Access token secret not provided")
+
+                        handler.handleAccessToken(customerAuthSecret, it.replace(BEARER_PREFIX, ""))
                     }
                     else -> {
                         val serviceSharedSecret = authenticationProperties.serviceSharedSecret ?: throw CustomAuthenticationException("Service secret not provided")
 
+                        handler.handleAccessToken(serviceSharedSecret, it)
                     }
                 }
+
+                SecurityContextHolder.getContext().authentication = result
+                onSuccessfulAuthentication(request, response, result)
+                chain.doFilter(request, response)
             }catch (e: AuthenticationException) {
                 SecurityContextHolder.clearContext()
                 onUnsuccessfulAuthentication(request, response, e)
