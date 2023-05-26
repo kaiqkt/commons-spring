@@ -28,18 +28,18 @@ public class SecurityWebServletConfiguration(
     @Autowired
     private lateinit var authenticationConfiguration: AuthenticationConfiguration
 
-    @Bean
-    public fun ignoringCustomizer(): WebSecurityCustomizer {
-        return WebSecurityCustomizer { web: WebSecurity ->
-            web.ignoring()
-                .antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths)
-                .antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths)
-                .antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths)
-                .antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths)
-                .antMatchers(*PATH_MATCHERS)
-                .antMatchers(*authenticationProperties.ignoreGenericPaths)
-        }
-    }
+//    @Bean
+//    public fun ignoringCustomizer(): WebSecurityCustomizer {
+//        return WebSecurityCustomizer { web: WebSecurity ->
+//            web.ignoring()
+//                .antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths)
+//                .antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths)
+//                .antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths)
+//                .antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths)
+//                .antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths))
+//                .antMatchers(*authenticationProperties.ignoreGenericPaths)
+//        }
+//    }
 
     @Bean
     @Throws(java.lang.Exception::class)
@@ -55,8 +55,12 @@ public class SecurityWebServletConfiguration(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
             .headers().apply { disable() }.and()
-            .authorizeHttpRequests()
-            .anyRequest().authenticated().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths).permitAll().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths).permitAll().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths).permitAll().and()
+            .authorizeHttpRequests().antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths)).permitAll().and()
+            .authorizeHttpRequests().anyRequest().authenticated().and()
             .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager(authenticationConfiguration), restAuthenticationEntryPoint))
 
         return http.build()
