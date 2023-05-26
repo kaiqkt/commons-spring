@@ -28,19 +28,6 @@ public class SecurityWebServletConfiguration(
     @Autowired
     private lateinit var authenticationConfiguration: AuthenticationConfiguration
 
-//    @Bean
-//    public fun ignoringCustomizer(): WebSecurityCustomizer {
-//        return WebSecurityCustomizer { web: WebSecurity ->
-//            web.ignoring()
-//                .antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths)
-//                .antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths)
-//                .antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths)
-//                .antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths)
-//                .antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths))
-//                .antMatchers(*authenticationProperties.ignoreGenericPaths)
-//        }
-//    }
-
     @Bean
     @Throws(java.lang.Exception::class)
     public fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
