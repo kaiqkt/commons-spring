@@ -51,11 +51,12 @@ public class SecurityWebServletConfiguration(
     @Throws(Exception::class)
     public fun filterChain(http: HttpSecurity): SecurityFilterChain? {
 
-        http.sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
             .headers().apply { disable() }.and()
-            .authorizeHttpRequests().and()
+            .authorizeHttpRequests()
+            .anyRequest().authenticated().and()
             .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager(authenticationConfiguration), restAuthenticationEntryPoint))
 
         return http.build()
