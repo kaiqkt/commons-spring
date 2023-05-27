@@ -9,12 +9,17 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 public open class SpringDocsConfiguration {
     @Bean
-    public open fun springDocConfiguration(): SpringDocConfiguration {
+    public fun springDocConfiguration(): SpringDocConfiguration {
         return SpringDocConfiguration()
     }
 
     @Bean
-    public open fun objectMapperProvider(springDocConfigProperties: SpringDocConfigProperties?): ObjectMapperProvider {
-        return ObjectMapperProvider(SpringDocConfigProperties())
+    public fun springDocConfigProperties(): SpringDocConfigProperties {
+        return SpringDocConfigProperties()
+    }
+
+    @Bean
+    public fun objectMapperProvider(springDocConfigProperties: SpringDocConfigProperties?): ObjectMapperProvider {
+        return ObjectMapperProvider(springDocConfigProperties)
     }
 }
