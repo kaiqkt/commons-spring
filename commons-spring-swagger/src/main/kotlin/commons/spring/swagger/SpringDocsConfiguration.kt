@@ -14,12 +14,7 @@ public open class SpringDocsConfiguration {
     }
 
     @Bean
-    public open fun springDocConfigProperties(): SpringDocConfigProperties {
-        return SpringDocConfigProperties()
-    }
-
-    @Bean
     public open fun objectMapperProvider(springDocConfigProperties: SpringDocConfigProperties?): ObjectMapperProvider {
-        return ObjectMapperProvider(springDocConfigProperties)
+        return ObjectMapperProvider(SpringDocConfigProperties())
     }
 }
