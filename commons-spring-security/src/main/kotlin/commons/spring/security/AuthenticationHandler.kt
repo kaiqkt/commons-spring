@@ -19,7 +19,7 @@ public class AuthenticationHandler {
         if (serviceToken == serviceSecret) {
             Authentication(
                 token = serviceToken,
-                claims = mapOf(),
+                claims = mapOf("role" to ROLE_SERVICE),
                 authenticated = true
             )
         }
