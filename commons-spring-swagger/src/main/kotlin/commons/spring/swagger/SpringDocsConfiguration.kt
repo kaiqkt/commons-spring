@@ -21,7 +21,7 @@ public open class SpringDocsConfiguration {
     }
 
     @Bean
-    public fun objectMapperProvider(springDocConfigProperties: SpringDocConfigProperties?): ObjectMapperProvider {
+    public open fun objectMapperProvider(springDocConfigProperties: SpringDocConfigProperties?): ObjectMapperProvider {
         return ObjectMapperProvider(springDocConfigProperties)
     }
 }
