@@ -10,6 +10,7 @@ public class AuthenticationHandler {
         return Authentication(
             token = accessToken,
             claims = claims,
+            role = ROLE_USER,
             authenticated = true
         )
     }
@@ -19,7 +20,8 @@ public class AuthenticationHandler {
         if (serviceToken == serviceSecret) {
             Authentication(
                 token = serviceToken,
-                claims = mapOf("role" to ROLE_SERVICE),
+                claims = mapOf(),
+                role = ROLE_SERVICE,
                 authenticated = true
             )
         }

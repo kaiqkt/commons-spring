@@ -9,7 +9,7 @@ plugins {
 allprojects {
 
     group = "com.kaiqkt"
-    version = "1.0.2"
+    version = "1.0.3"
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "maven-publish")

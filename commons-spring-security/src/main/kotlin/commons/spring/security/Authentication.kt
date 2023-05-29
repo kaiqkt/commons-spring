@@ -6,15 +6,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 
 public class Authentication(
     private val token: String,
+    private val role: String,
     private val claims: Map<String, Any>,
     private var authenticated: Boolean = false
 ) : Authentication {
 
-    private val authority = claims["role"]?.toString() ?: ROLE_USER
-
     override fun getName(): String = claims["name"]?.toString() ?: "PRINCIPAL"
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
-        mutableListOf(SimpleGrantedAuthority(authority))
+        mutableListOf(SimpleGrantedAuthority(role))
 
     override fun getCredentials(): Any = token
 
