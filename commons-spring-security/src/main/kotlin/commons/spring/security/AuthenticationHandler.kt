@@ -18,7 +18,7 @@ public class AuthenticationHandler {
     public fun handleServiceToken(serviceSecret: String, serviceToken: String): Authentication {
 
         if (serviceToken == serviceSecret) {
-            Authentication(
+            return Authentication(
                 token = serviceToken,
                 claims = mapOf(),
                 role = ROLE_SERVICE,
