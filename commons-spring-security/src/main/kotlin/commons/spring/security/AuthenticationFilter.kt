@@ -33,7 +33,7 @@ public class AuthenticationFilter(
                     else -> {
                         val serviceSharedSecret = authenticationProperties.serviceSharedSecret ?: throw CustomAuthenticationException("Service secret not provided")
 
-                        handler.handleAccessToken(serviceSharedSecret, it)
+                        handler.handleServiceToken(serviceSharedSecret, it)
                     }
                 }
 
