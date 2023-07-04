@@ -1,18 +1,21 @@
 package commons.spring.security
 
-import commons.spring.encrypt.parseJwtClaims
+import commons.spring.encrypt.getClaims
 
 public class AuthenticationHandler {
 
-    public fun handleAccessToken(accessTokenSecret: String,accessToken: String): Authentication {
-        val claims = parseJwtClaims(accessToken, accessTokenSecret)
+    public fun handleAccessToken(accessTokenSecret: String, accessToken: String): Authentication {
+        val jwt = getClaims(accessToken, accessTokenSecret)
 
-        return Authentication(
-            token = accessToken,
-            claims = claims,
-            role = ROLE_USER,
-            authenticated = true
-        )
+        if (!jwt.isExpired) {
+            return Authentication(
+                token = accessToken,
+                claims = jwt.claims,
+                authenticated = true
+            )
+        }
+
+        throw CustomAuthenticationException("Access token expired")
     }
 
     public fun handleServiceToken(serviceSecret: String, serviceToken: String): Authentication {
@@ -20,8 +23,7 @@ public class AuthenticationHandler {
         if (serviceToken == serviceSecret) {
             return Authentication(
                 token = serviceToken,
-                claims = mapOf(),
-                role = ROLE_SERVICE,
+                claims = mapOf("role" to ROLE_SERVICE),
                 authenticated = true
             )
         }

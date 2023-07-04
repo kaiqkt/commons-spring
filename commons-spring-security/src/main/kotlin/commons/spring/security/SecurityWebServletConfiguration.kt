@@ -38,8 +38,7 @@ public class SecurityWebServletConfiguration(
     @Throws(Exception::class)
     public fun filterChain(http: HttpSecurity): SecurityFilterChain? {
 
-        http
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
             .headers().apply { disable() }.and()
             .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll().and()
