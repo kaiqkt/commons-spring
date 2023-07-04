@@ -4,16 +4,21 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 
-public class Authentication(
+public data class Authentication(
+    val claims: Map<String, Any>,
     private val token: String,
-    private val role: String,
-    private val claims: Map<String, Any>,
     private var authenticated: Boolean = false
 ) : Authentication {
 
+    public fun getClaim(key: String): String =
+        claims[key]?.toString() ?: throw UnauthorizedException("Invalid Authorization token")
+
     override fun getName(): String = claims["name"]?.toString() ?: "PRINCIPAL"
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
-        mutableListOf(SimpleGrantedAuthority(role))
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        val role = claims["role"]?.toString() ?: "ROLE_USER"
+
+        return mutableListOf(SimpleGrantedAuthority(role))
+    }
 
     override fun getCredentials(): Any = token
 
