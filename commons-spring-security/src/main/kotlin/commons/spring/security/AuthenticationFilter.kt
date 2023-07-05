@@ -1,6 +1,7 @@
 package commons.spring.security
 
 import java.io.IOException
+import java.lang.IllegalArgumentException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -26,12 +27,12 @@ public class AuthenticationFilter(
             try {
                 val result: Authentication = when{
                     it.startsWith(BEARER_PREFIX) -> {
-                        val customerAuthSecret = authenticationProperties.customerAuthSigningSecret ?: throw CustomAuthenticationException("Access token secret not provided")
+                        val customerAuthSecret = authenticationProperties.customerAuthSigningSecret ?: throw IllegalArgumentException("Access token secret not provided")
 
                         handler.handleAccessToken(customerAuthSecret, it.replace(BEARER_PREFIX, ""))
                     }
                     else -> {
-                        val serviceSharedSecret = authenticationProperties.serviceSharedSecret ?: throw CustomAuthenticationException("Service secret not provided")
+                        val serviceSharedSecret = authenticationProperties.serviceSharedSecret ?: throw IllegalArgumentException("Service secret not provided")
 
                         handler.handleServiceToken(serviceSharedSecret, it)
                     }
