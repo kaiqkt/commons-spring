@@ -15,7 +15,7 @@ public class AuthenticationHandler {
             )
         }
 
-        throw CustomAuthenticationException("Access token expired")
+        throw AccessTokenExpiredException("Access token expired")
     }
 
     public fun handleServiceToken(serviceSecret: String, serviceToken: String): Authentication {
@@ -28,6 +28,6 @@ public class AuthenticationHandler {
             )
         }
 
-        throw CustomAuthenticationException("Invalid service token")
+        throw InvalidTokenException("Invalid service token")
     }
 }
