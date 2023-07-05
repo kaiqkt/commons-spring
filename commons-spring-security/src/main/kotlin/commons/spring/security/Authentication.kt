@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 
 public data class Authentication(
-    val claims: Map<String, Any>,
+    private val claims: Map<String, Any>,
     private val token: String,
     private var authenticated: Boolean = false
 ) : Authentication {
