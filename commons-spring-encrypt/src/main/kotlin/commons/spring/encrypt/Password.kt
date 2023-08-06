@@ -7,11 +7,6 @@ import javax.crypto.spec.PBEKeySpec
 import kotlin.experimental.or
 import kotlin.experimental.xor
 
-public data class Password(
-    val hash: String,
-    val salt: String
-)
-
 private const val KEY_LENGTH = 256
 private const val SALT_SIZE = 16
 private const val HEX_BITS = 16
@@ -19,26 +14,27 @@ private const val KEY_FACTORY_INSTANCE = "PBKDF2WithHmacSHA1"
 private const val SECURE_RANDOM = "SHA1PRNG"
 
 //Encrypt the raw password
-public fun String.encrypt(): Password {
+public fun String.encrypt(): Pair<String, String> {
     val arrayPassword = this.toCharArray()
     val salt = generateSalt()
 
     val hash = encode(arrayPassword, salt)
 
-    return Password(hash = toHex(hash), salt = toHex(salt))
+    //hash salt
+    return Pair(toHex(hash), toHex(salt))
 }
 
 //Compare the actual secured password with a raw password
-public fun Password.compareTo(str: String): Boolean {
-    val hash = fromHex(this.hash)
+public fun String.compareWith(hash: String, salt: String): Boolean {
+    val hex = fromHex(hash)
     val hashOriginalPassword = encode(
-        str.toCharArray(),
-        fromHex(this.salt)
+        this.toCharArray(),
+        fromHex(salt)
     )
 
-    var diff = hash.size.toByte() xor hashOriginalPassword.size.toByte()
+    var diff = hex.size.toByte() xor hashOriginalPassword.size.toByte()
 
-    hash.forEachIndexed { index, byte ->
+    hex.forEachIndexed { index, byte ->
         kotlin.run {
             if (index > hashOriginalPassword.size) return false
 
