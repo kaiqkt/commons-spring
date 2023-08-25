@@ -11,10 +11,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-
 
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
@@ -23,22 +23,10 @@ import org.springframework.security.web.SecurityFilterChain
 public class SecurityWebServletConfiguration(
     private val authenticationProperties: AuthenticationProperties,
     private val restAuthenticationEntryPoint: RestAuthenticationEntryPoint
-){
-
-    @Autowired
-    private lateinit var authenticationConfiguration: AuthenticationConfiguration
-
-    @Bean
-    @Throws(java.lang.Exception::class)
-    public fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
-        return authenticationConfiguration.authenticationManager
-    }
-
-    @Bean
-    @Throws(Exception::class)
-    public fun filterChain(http: HttpSecurity): SecurityFilterChain? {
-
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+) : WebSecurityConfigurerAdapter() {
+    override fun configure(http: HttpSecurity) {
+        http
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
             .headers().apply { disable() }.and()
             .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll().and()
@@ -46,13 +34,12 @@ public class SecurityWebServletConfiguration(
             .authorizeHttpRequests().antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths)).permitAll().and()
-            .authorizeHttpRequests().anyRequest().authenticated().and()
-            .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager(authenticationConfiguration), restAuthenticationEntryPoint))
-
-        return http.build()
+            .authorizeHttpRequests()
+            .anyRequest().authenticated().and()
+            .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager(), restAuthenticationEntryPoint))
     }
 
-    private companion object {
+    public companion object {
         private val PATH_MATCHERS = arrayOf(
             "/v2/api-docs",
             "/v3/api-docs/**",
@@ -65,7 +52,7 @@ public class SecurityWebServletConfiguration(
             "/webjars/**",
             "/api-docs.yml",
             "/docs",
-            "/health-check"
+            "/health"
         )
     }
 }
