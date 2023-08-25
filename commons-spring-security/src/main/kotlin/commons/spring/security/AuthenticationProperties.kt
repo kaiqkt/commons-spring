@@ -10,9 +10,9 @@ import org.springframework.validation.annotation.Validated
 public data class AuthenticationProperties(
     val customerAuthSigningSecret: String?,
     val serviceSharedSecret: String?,
-    val ignoreGetPaths:Array<String> = emptyArray(),
+    val ignoreGetPaths: Array<String> = emptyArray(),
     val ignorePostPaths: Array<String> = emptyArray(),
-    val ignorePutPaths:Array<String> = emptyArray(),
+    val ignorePutPaths: Array<String> = emptyArray(),
     val ignoreDeletePaths: Array<String> = emptyArray(),
     val ignoreGenericPaths: Array<String> = emptyArray()
 ) {
