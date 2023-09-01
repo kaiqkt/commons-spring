@@ -3,8 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.8.20"
     id("maven-publish")
-    kotlin("plugin.spring") version "1.7.10"
-    id("org.springframework.boot") version "2.7.12"
 }
 
 allprojects {
@@ -20,8 +18,8 @@ allprojects {
     }
 
     dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
+        implementation("org.springframework.boot:spring-boot-starter-web:2.7.12")
     }
 
     tasks.withType<KotlinCompile> {
