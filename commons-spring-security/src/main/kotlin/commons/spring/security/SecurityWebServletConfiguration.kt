@@ -32,6 +32,7 @@ public class SecurityWebServletConfiguration(
             .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths).permitAll().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.PATCH, *authenticationProperties.ignorePatchPaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths)).permitAll().and()
             .authorizeHttpRequests()
