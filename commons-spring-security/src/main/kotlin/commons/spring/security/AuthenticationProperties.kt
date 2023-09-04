@@ -13,9 +13,11 @@ public data class AuthenticationProperties(
     val ignoreGetPaths: Array<String> = emptyArray(),
     val ignorePostPaths: Array<String> = emptyArray(),
     val ignorePutPaths: Array<String> = emptyArray(),
+    val ignorePatchPaths: Array<String> = emptyArray(),
     val ignoreDeletePaths: Array<String> = emptyArray(),
     val ignoreGenericPaths: Array<String> = emptyArray()
 ) {
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -27,6 +29,7 @@ public data class AuthenticationProperties(
         if (!ignoreGetPaths.contentEquals(other.ignoreGetPaths)) return false
         if (!ignorePostPaths.contentEquals(other.ignorePostPaths)) return false
         if (!ignorePutPaths.contentEquals(other.ignorePutPaths)) return false
+        if (!ignorePatchPaths.contentEquals(other.ignorePatchPaths)) return false
         if (!ignoreDeletePaths.contentEquals(other.ignoreDeletePaths)) return false
         return ignoreGenericPaths.contentEquals(other.ignoreGenericPaths)
     }
@@ -37,6 +40,7 @@ public data class AuthenticationProperties(
         result = 31 * result + ignoreGetPaths.contentHashCode()
         result = 31 * result + ignorePostPaths.contentHashCode()
         result = 31 * result + ignorePutPaths.contentHashCode()
+        result = 31 * result + ignorePatchPaths.contentHashCode()
         result = 31 * result + ignoreDeletePaths.contentHashCode()
         result = 31 * result + ignoreGenericPaths.contentHashCode()
         return result
