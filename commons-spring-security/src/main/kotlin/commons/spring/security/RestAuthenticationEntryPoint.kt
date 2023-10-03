@@ -24,7 +24,7 @@ public class RestAuthenticationEntryPoint : AuthenticationEntryPoint {
         }
         val body = mapOf("type" to error, "message" to message)
 
-        response.outputStream.println(jacksonObjectMapper().writeValueAsString(body))
+        response.outputStream.write(jacksonObjectMapper().writeValueAsBytes(body))
         response.status = HttpServletResponse.SC_UNAUTHORIZED
     }
 }
