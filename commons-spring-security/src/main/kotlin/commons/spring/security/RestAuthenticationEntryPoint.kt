@@ -24,8 +24,8 @@ public class RestAuthenticationEntryPoint : AuthenticationEntryPoint {
         }
         val body = """
             {
-                "type": $error,
-                "message": $message
+                "type": "$error",
+                "message": "$message"
             }
         """.trimIndent()
 
