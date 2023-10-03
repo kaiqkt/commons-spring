@@ -53,7 +53,7 @@ public class SecurityWebServletConfiguration(
             "/webjars/**",
             "/api-docs.yml",
             "/docs",
-            "/health"
+            "/health-check"
         )
     }
 }
