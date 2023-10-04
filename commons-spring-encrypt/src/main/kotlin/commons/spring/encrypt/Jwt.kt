@@ -15,7 +15,6 @@ public data class Jwt(
 public fun getClaims(accessToken: String, secret: String): Jwt {
     return try {
         val claims = Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(accessToken).body
-Claims
         Jwt(claims, false)
     } catch (ex: ExpiredJwtException) {
         Jwt(ex.claims, true)
