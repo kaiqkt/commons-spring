@@ -1,5 +1,6 @@
 package commons.spring.encrypt
 
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -14,7 +15,6 @@ public data class Jwt(
 public fun getClaims(accessToken: String, secret: String): Jwt {
     return try {
         val claims = Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(accessToken).body
-
         Jwt(claims, false)
     } catch (ex: ExpiredJwtException) {
         Jwt(ex.claims, true)

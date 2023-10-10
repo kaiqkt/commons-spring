@@ -22,9 +22,14 @@ public class RestAuthenticationEntryPoint : AuthenticationEntryPoint {
             is InvalidTokenException -> "INVALID_SERVICE_TOKEN"
             else -> "AUTHENTICATION_ERROR"
         }
-        val body = mapOf("type" to error, "message" to message)
+        val body = """
+            {
+                "type": "$error",
+                "message": "$message"
+            }
+        """.trimIndent()
 
-        response.outputStream.write(jacksonObjectMapper().writeValueAsBytes(body))
+        response.outputStream.println(body)
         response.status = HttpServletResponse.SC_UNAUTHORIZED
     }
 }
