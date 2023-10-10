@@ -28,6 +28,7 @@ public class SecurityWebServletConfiguration(
         http
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
+            .cors().apply { disable() }.and()
             .headers().apply { disable() }.and()
             .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll().and()
             .authorizeHttpRequests().antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths).permitAll().and()
