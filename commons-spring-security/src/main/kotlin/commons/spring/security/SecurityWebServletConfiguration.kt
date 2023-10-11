@@ -51,16 +51,6 @@ public class SecurityWebServletConfiguration(
             )
     }
 
-    @Bean
-    public fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration().applyPermitDefaultValues()
-        configuration.allowedMethods = mutableListOf("POST", "GET", "PUT", "DELETE", "OPTIONS")
-        configuration.allowedHeaders = listOf("*")
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
-
     public companion object {
         private val PATH_MATCHERS = arrayOf(
             "/v2/api-docs",
