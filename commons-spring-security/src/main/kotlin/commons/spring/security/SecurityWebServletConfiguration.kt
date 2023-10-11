@@ -26,24 +26,36 @@ public class SecurityWebServletConfiguration(
         http
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .csrf().apply { disable() }.and()
-            .cors().apply { disable() }.and()
+            .cors().and()
             .headers().apply { disable() }.and()
-            .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll().and()
-            .authorizeHttpRequests().antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths).permitAll().and()
-            .authorizeHttpRequests().antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths).permitAll().and()
-            .authorizeHttpRequests().antMatchers(HttpMethod.PATCH, *authenticationProperties.ignorePatchPaths).permitAll().and()
-            .authorizeHttpRequests().antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths).permitAll().and()
-            .authorizeHttpRequests().antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths)).permitAll().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.GET, *authenticationProperties.ignoreGetPaths).permitAll()
+            .and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.POST, *authenticationProperties.ignorePostPaths).permitAll()
+            .and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.PUT, *authenticationProperties.ignorePutPaths).permitAll()
+            .and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.PATCH, *authenticationProperties.ignorePatchPaths)
+            .permitAll().and()
+            .authorizeHttpRequests().antMatchers(HttpMethod.DELETE, *authenticationProperties.ignoreDeletePaths)
+            .permitAll().and()
+            .authorizeHttpRequests().antMatchers(*PATH_MATCHERS.plus(authenticationProperties.ignoreGenericPaths))
+            .permitAll().and()
             .authorizeHttpRequests()
             .anyRequest().authenticated().and()
-            .addFilter(AuthenticationFilter(authenticationProperties, authenticationManager(), restAuthenticationEntryPoint))
+            .addFilter(
+                AuthenticationFilter(
+                    authenticationProperties,
+                    authenticationManager(),
+                    restAuthenticationEntryPoint
+                )
+            )
     }
 
     @Bean
     public fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOriginPatterns = listOf("*")
-        configuration.allowedMethods = listOf("*")
+        val configuration = CorsConfiguration().applyPermitDefaultValues()
+        configuration.allowedMethods = mutableListOf("POST", "GET", "PUT", "DELETE", "OPTIONS")
+        configuration.allowedHeaders = listOf("*")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
