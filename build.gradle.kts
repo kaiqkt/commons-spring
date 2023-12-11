@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.9.21"
     id("maven-publish")
 }
 
 allprojects {
 
     group = "com.kaiqkt"
-    version = "1.4.5"
+    version = "2.0.0"
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "maven-publish")
@@ -19,13 +19,13 @@ allprojects {
 
     dependencies {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
-        implementation("org.springframework.boot:spring-boot-starter-web:2.7.12")
+        implementation("org.springframework.boot:spring-boot-starter-web:3.2.0")
     }
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "11"
+            jvmTarget = "21"
         }
     }
 

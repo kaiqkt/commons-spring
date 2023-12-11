@@ -1,11 +1,9 @@
 package commons.spring.security
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.validation.annotation.Validated
 
 @ConfigurationProperties(prefix = "app.auth")
-@ConstructorBinding
 @Validated
 public data class AuthenticationProperties(
     val customerAuthSigningSecret: String?,
