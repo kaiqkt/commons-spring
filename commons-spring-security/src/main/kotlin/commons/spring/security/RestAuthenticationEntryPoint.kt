@@ -1,8 +1,7 @@
 package commons.spring.security
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
@@ -17,7 +16,7 @@ public class RestAuthenticationEntryPoint : AuthenticationEntryPoint {
     ) {
         val message = authenticationException.message ?: "Error in spring security filter"
 
-        val error = when(authenticationException) {
+        val error = when (authenticationException) {
             is AccessTokenExpiredException -> "ACCESS_TOKEN_EXPIRED"
             is InvalidTokenException -> "INVALID_SERVICE_TOKEN"
             else -> "AUTHENTICATION_ERROR"
